@@ -20,6 +20,8 @@ typedef enum Cell {
 
 typedef Cell Board[BOARD_HEIGHT][BOARD_WIDTH];
 
+typedef enum Direction {LEFT, UP, RIGHT, DOWN} Direction;
+
 int main() {
 	return EXIT_SUCCESS;
 }
