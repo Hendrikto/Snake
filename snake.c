@@ -12,6 +12,12 @@ typedef struct Position {
 	int col;
 } Position;
 
+typedef enum Cell {
+	EMPTY
+	,SNAKE
+	,FOOD
+} Cell;
+
 int main() {
 	return EXIT_SUCCESS;
 }
