@@ -18,6 +18,8 @@ typedef enum Cell {
 	,FOOD
 } Cell;
 
+typedef Cell Board[BOARD_HEIGHT][BOARD_WIDTH];
+
 int main() {
 	return EXIT_SUCCESS;
 }
