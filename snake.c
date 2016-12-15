@@ -114,6 +114,21 @@ bool snakeDead(Game *game) {
 		|| game->board[row][col] == SNAKE;
 }
 
+/**
+ * Initialize a game.
+ */
+void initGame(Game *game) {
+	game->head.col = 0;
+	game->head.row = 0;
+	game->tail = calloc(BOARD_WIDTH, sizeof(Position));
+	game->tailLength = 0;
+	game->tailAllocated = BOARD_WIDTH;
+	game->food.col = BOARD_WIDTH / 2;
+	game->food.row = BOARD_HEIGHT / 2;
+	game->movement = RIGHT;
+	drawBoard(game);
+}
+
 int main() {
 	return EXIT_SUCCESS;
 }
