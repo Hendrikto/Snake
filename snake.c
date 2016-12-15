@@ -115,6 +115,19 @@ bool snakeDead(Game *game) {
 }
 
 /**
+ * Draw the board with the current game state. This clears the board before
+ * writing to it.
+ */
+void drawBoard(Game *game) {
+	clearBoard(game->board);
+	game->board[game->head.row][game->head.col] = SNAKE;
+	game->board[game->food.row][game->food.col] = FOOD;
+	for (size_t i = 0; i < game->tailLength; i++) {
+		game->board[game->tail[i].row][game->tail[i].col] = SNAKE;
+	}
+}
+
+/**
  * Initialize a game.
  */
 void initGame(Game *game) {
