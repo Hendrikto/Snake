@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <string.h>
 
 /**
  * @author: Hendrik Werner
@@ -21,6 +22,13 @@ typedef enum Cell {
 typedef Cell Board[BOARD_HEIGHT][BOARD_WIDTH];
 
 typedef enum Direction {LEFT, UP, RIGHT, DOWN} Direction;
+
+/**
+ * Clear a board by setting all cells to EMPTY.
+ */
+void clearBoard(Board board) {
+	memset(board, EMPTY, sizeof(Board));
+}
 
 /**
  * @param d The direction.
