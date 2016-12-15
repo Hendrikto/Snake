@@ -27,7 +27,7 @@ typedef enum Direction {LEFT, UP, RIGHT, DOWN} Direction;
  *
  * @return The row delta of a given direction.
  */
-int rowDelta(Direction d) {
+int rowDelta(const Direction d) {
 	switch (d) {
 		case UP: return -1;
 		case DOWN: return 1;
@@ -40,7 +40,7 @@ int rowDelta(Direction d) {
  *
  * @return The column delta of a given direction.
  */
-int colDelta(Direction d) {
+int colDelta(const Direction d) {
 	switch (d) {
 		case LEFT: return -1;
 		case RIGHT: return 1;
