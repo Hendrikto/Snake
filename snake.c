@@ -24,6 +24,16 @@ typedef Cell Board[BOARD_HEIGHT][BOARD_WIDTH];
 
 typedef enum Direction {LEFT, UP, RIGHT, DOWN} Direction;
 
+typedef struct Game {
+	Board board;
+	Position head;
+	Position *tail;
+	size_t tailLength;
+	size_t tailAllocated;
+	Position food;
+	Direction movement;
+} Game;
+
 /**
  * Clear a board by setting all cells to EMPTY.
  */
