@@ -1,3 +1,4 @@
+#include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -88,6 +89,19 @@ char *stringify(const Board board) {
 	}
 	str[pos] = '\0';
 	return str;
+}
+
+/**
+ * @return Whether the snake is dead.
+ */
+bool snakeDead(Game *game) {
+	int col = game->head.col;
+	int row = game->head.row;
+	return col >= BOARD_WIDTH
+		|| col < 0
+		|| row >= BOARD_HEIGHT
+		|| row < 0
+		|| game->board[row][col] == SNAKE;
 }
 
 int main() {
