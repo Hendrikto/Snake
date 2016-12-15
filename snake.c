@@ -23,6 +23,32 @@ typedef Cell Board[BOARD_HEIGHT][BOARD_WIDTH];
 typedef enum Direction {LEFT, UP, RIGHT, DOWN} Direction;
 
 /**
+ * @param d The direction.
+ *
+ * @return The row delta of a given direction.
+ */
+int rowDelta(Direction d) {
+	switch (d) {
+		case UP: return -1;
+		case DOWN: return 1;
+		default: return 0;
+	}
+}
+
+/**
+ * @param d The direction.
+ *
+ * @return The column delta of a given direction.
+ */
+int colDelta(Direction d) {
+	switch (d) {
+		case LEFT: return -1;
+		case RIGHT: return 1;
+		default: return 0;
+	}
+}
+
+/**
  * Represent a cell using a character.
  *
  * @return A character representing the content of the cell provided.
