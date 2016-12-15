@@ -119,10 +119,12 @@ bool snakeDead(Game *game) {
  * writing to it.
  */
 void drawBoard(Game *game) {
+	Position *tail = game->tail;
+	size_t length = game->tailLength;
 	clearBoard(game->board);
 	game->board[game->head.row][game->head.col] = SNAKE;
-	for (size_t i = 0; i < game->tailLength; i++) {
-		game->board[game->tail[i].row][game->tail[i].col] = SNAKE;
+	for (size_t i = 0; i < length; i++) {
+		game->board[tail[i].row][tail[i].col] = SNAKE;
 	}
 	game->board[game->food.row][game->food.col] = FOOD;
 }
