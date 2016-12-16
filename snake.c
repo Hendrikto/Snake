@@ -116,6 +116,21 @@ bool snakeDead(Board board, Position position) {
 }
 
 /**
+ * Shift the tail by moving all elements down and putting the head at the top.
+ */
+void shiftTail(Game *game) {
+	size_t length;
+	if ((length = game->tailLength)) {
+		Position *tail = game->tail;
+		for (size_t i = 0; i < length - 1; i++) {
+			tail[i] = tail[i + 1];
+		}
+		tail[length - 1].col = game->head.col;
+		tail[length - 1].row = game->head.row;
+	}
+}
+
+/**
  * Draw the board with the current game state. This clears the board before
  * writing to it.
  */
