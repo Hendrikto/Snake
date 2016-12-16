@@ -102,16 +102,17 @@ char *stringify(const Board board) {
 }
 
 /**
- * @return Whether the snake is dead.
+ * @param board The board.
+ * @param postition The position.
+ *
+ * @return Whether the snake is dead at the given position on the given board.
  */
-bool snakeDead(Game *game) {
-	int col = game->head.col;
-	int row = game->head.row;
-	return col >= BOARD_WIDTH
-		|| col < 0
-		|| row >= BOARD_HEIGHT
-		|| row < 0
-		|| game->board[row][col] == SNAKE;
+bool snakeDead(Board board, Position position) {
+	return position.col >= BOARD_WIDTH
+		|| position.col < 0
+		|| position.row >= BOARD_HEIGHT
+		|| position.row < 0
+		|| board[position.row][position.col] == SNAKE;
 }
 
 /**
