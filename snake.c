@@ -131,6 +131,19 @@ void shiftTail(Game *game) {
 }
 
 /**
+ * Extend the tail by appending the head. This function will reallocate the tail
+ * if it is not big enough to hold another element.
+ */
+void extendTail(Game *game) {
+	game->tailLength++;
+	if (game->tailLength > game->tailAllocated) {
+		game->tailAllocated += BOARD_WIDTH;
+		game->tail = realloc(game->tail, game->tailAllocated);
+	}
+	game->tail[game->tailLength - 1] = game->head;
+}
+
+/**
  * Draw the board with the current game state. This clears the board before
  * writing to it.
  */
