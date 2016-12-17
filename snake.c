@@ -107,7 +107,7 @@ char *stringify(const Board board) {
  *
  * @return Whether the snake is dead at the given position on the given board.
  */
-bool snakeDead(Board board, Position position) {
+bool snakeDead(const Board board, const Position position) {
 	return position.col >= BOARD_WIDTH
 		|| position.col < 0
 		|| position.row >= BOARD_HEIGHT
