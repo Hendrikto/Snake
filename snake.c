@@ -102,6 +102,24 @@ char *stringify(const Board board) {
 }
 
 /**
+ * Check whether there is a tail at some position.
+ *
+ * @return Whether there is a tail at the specified position.
+ */
+bool tailAt(
+	const Position *tail
+	,const size_t length
+	,const Position position
+) {
+	for (size_t i = 0; i < length; i++) {
+		if (tail[i].row == position.row && tail[i].col == position.col) {
+			return true;
+		}
+	}
+	return false;
+}
+
+/**
  * @param board The board.
  * @param postition The position.
  *
