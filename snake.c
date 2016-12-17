@@ -173,6 +173,33 @@ void initGame(Game *game) {
 	drawBoard(game);
 }
 
+/**
+ * Advance the game state one tick.
+ *
+ * @param game The game.
+ *
+ * @return Whether the snake is still alive.
+ */
+bool tick(Game *game) {
+	Position next = {
+		game->head.row + rowDelta(game->movement)
+		,game->head.col + colDelta(game->movement)
+	};
+	if (snakeDead(game->board, next)) {
+		return false;
+	}
+	if (next.row == game->food.row && next.col == game->food.col) {
+		game->food.col = random() % BOARD_WIDTH;
+		game->food.row = random() % BOARD_HEIGHT;
+		extendTail(game);
+	} else {
+		shiftTail(game);
+	}
+	game->head = next;
+	drawBoard(game);
+	return true;
+}
+
 int main() {
 	return EXIT_SUCCESS;
 }
