@@ -138,7 +138,9 @@ void extendTail(Game *game) {
 	game->tailLength++;
 	if (game->tailLength > game->tailAllocated) {
 		game->tailAllocated += BOARD_WIDTH;
-		game->tail = realloc(game->tail, game->tailAllocated);
+		game->tail = realloc(
+			game->tail, game->tailAllocated * sizeof(Position)
+		);
 	}
 	game->tail[game->tailLength - 1] = game->head;
 }
