@@ -25,7 +25,6 @@ typedef Cell Board[BOARD_HEIGHT][BOARD_WIDTH];
 typedef enum Direction {LEFT, UP, RIGHT, DOWN} Direction;
 
 typedef struct Game {
-	Board board;
 	Position head;
 	Position *tail;
 	size_t tailLength;
@@ -120,17 +119,14 @@ bool tailAt(
 }
 
 /**
- * @param board The board.
- * @param postition The position.
- *
  * @return Whether the snake is dead at the given position on the given board.
  */
-bool snakeDead(const Board board, const Position position) {
+bool snakeDead(const Position *tail, size_t length, const Position position) {
 	return position.col >= BOARD_WIDTH
 		|| position.col < 0
 		|| position.row >= BOARD_HEIGHT
 		|| position.row < 0
-		|| board[position.row][position.col] == SNAKE;
+		|| tailAt(tail, length, position);
 }
 
 /**
@@ -167,15 +163,15 @@ void extendTail(Game *game) {
  * Draw the board with the current game state. This clears the board before
  * writing to it.
  */
-void drawBoard(Game *game) {
+void drawBoard(Game *game, Board board) {
 	Position *tail = game->tail;
 	size_t length = game->tailLength;
-	clearBoard(game->board);
-	game->board[game->head.row][game->head.col] = SNAKE;
+	clearBoard(board);
+	board[game->head.row][game->head.col] = SNAKE;
 	for (size_t i = 0; i < length; i++) {
-		game->board[tail[i].row][tail[i].col] = SNAKE;
+		board[tail[i].row][tail[i].col] = SNAKE;
 	}
-	game->board[game->food.row][game->food.col] = FOOD;
+	board[game->food.row][game->food.col] = FOOD;
 }
 
 /**
@@ -190,7 +186,6 @@ void initGame(Game *game) {
 	game->food.col = BOARD_WIDTH / 2;
 	game->food.row = BOARD_HEIGHT / 2;
 	game->movement = RIGHT;
-	drawBoard(game);
 }
 
 /**
@@ -205,7 +200,7 @@ bool tick(Game *game) {
 		game->head.row + rowDelta(game->movement)
 		,game->head.col + colDelta(game->movement)
 	};
-	if (snakeDead(game->board, next)) {
+	if (snakeDead(game->tail, game->tailLength, next)) {
 		return false;
 	}
 	if (next.row == game->food.row && next.col == game->food.col) {
@@ -216,7 +211,6 @@ bool tick(Game *game) {
 		shiftTail(game);
 	}
 	game->head = next;
-	drawBoard(game);
 	return true;
 }
 
