@@ -8,6 +8,7 @@
 
 #define BOARD_HEIGHT 50
 #define BOARD_WIDTH 50
+#define STEP_DELAY 500
 
 typedef struct Position {
 	int row;
