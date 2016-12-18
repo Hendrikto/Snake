@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <GL/glut.h>
+
 /**
  * @author: Hendrik Werner
  */
@@ -34,6 +36,8 @@ typedef struct Game {
 	Direction movement;
 } Game;
 
+Game game;
+
 /**
  * Clear a board by setting all cells to EMPTY.
  */
@@ -48,8 +52,8 @@ void clearBoard(Board board) {
  */
 int rowDelta(const Direction d) {
 	switch (d) {
-		case UP: return -1;
-		case DOWN: return 1;
+		case UP: return 1;
+		case DOWN: return -1;
 		default: return 0;
 	}
 }
@@ -213,6 +217,48 @@ bool tick(Game *game) {
 	}
 	game->head = next;
 	return true;
+}
+
+void drawCell(Position position, float r, float g, float b) {
+	float lowerX = position.col / (float) BOARD_WIDTH * 2 - 1;
+	float lowerY = position.row / (float) BOARD_HEIGHT * 2 - 1;
+	float higherX = (position.col + 1) / (float) BOARD_WIDTH * 2 - 1;
+	float higherY = (position.row + 1) / (float) BOARD_HEIGHT * 2 - 1;
+	glBegin(GL_QUADS);
+		glColor3f(r, g, b);
+		glVertex2f(lowerX, lowerY);
+		glVertex2f(higherX, lowerY);
+		glVertex2f(higherX, higherY);
+		glVertex2f(lowerX, higherY);
+	glEnd();
+}
+
+void display() {
+	glClearColor(0, 0, 0, 1);
+	glClear(GL_COLOR_BUFFER_BIT);
+	drawCell(game.head, .5, .5, .5);
+	for (size_t i = 0; i < game.tailLength; i++) {
+		drawCell(game.tail[i], 1, 1, 1);
+	}
+	drawCell(game.food, 1, 0, 0);
+	glFlush();
+}
+
+void handleKeyboard(unsigned char key, int x, int y) {
+	switch (key) {
+		case 'a': game.movement = LEFT; break;
+		case 'w': game.movement = UP; break;
+		case 'd': game.movement = RIGHT; break;
+		case 's': game.movement = DOWN; break;
+	}
+}
+
+void step(int value) {
+	if (!tick(&game)) {
+		exit(1);
+	}
+	glutPostRedisplay();
+	glutTimerFunc(STEP_DELAY, step, 0);
 }
 
 int main() {
