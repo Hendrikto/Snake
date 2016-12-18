@@ -6,6 +6,8 @@
 
 #include <GL/freeglut.h>
 
+#include <GL/glut.h>
+
 /**
  * @author: Hendrik Werner
  */
@@ -31,6 +33,16 @@ typedef struct Game {
 } Game;
 
 Game game;
+<<<<<<< HEAD
+=======
+
+/**
+ * Clear a board by setting all cells to EMPTY.
+ */
+void clearBoard(Board board) {
+	memset(board, EMPTY, sizeof(Board));
+}
+>>>>>>> Prepare for using GLUT.
 
 /**
  * @param d The direction.
