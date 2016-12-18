@@ -261,6 +261,15 @@ void step(int value) {
 	glutTimerFunc(STEP_DELAY, step, 0);
 }
 
-int main() {
+int main(int argc, char **argv) {
+	initGame(&game);
+	glutInit(&argc, argv);
+	glutCreateWindow("Snake");
+	glutInitWindowSize(500, 500);
+	glutDisplayFunc(display);
+	glutKeyboardFunc(handleKeyboard);
+	glutTimerFunc(STEP_DELAY, step, 0);
+	glutMainLoop();
+	free(game.tail);
 	return EXIT_SUCCESS;
 }
