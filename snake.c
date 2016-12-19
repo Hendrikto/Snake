@@ -124,8 +124,8 @@ void initGame(Game *game) {
 	game->tail = calloc(BOARD_WIDTH, sizeof(Position));
 	game->tailLength = 0;
 	game->tailAllocated = BOARD_WIDTH;
-	game->food.col = BOARD_WIDTH / 2;
-	game->food.row = BOARD_HEIGHT / 2;
+	game->food.col = random() % BOARD_WIDTH;
+	game->food.row = random() % BOARD_HEIGHT;
 	game->movement = RIGHT;
 }
 
