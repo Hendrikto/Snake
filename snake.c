@@ -1,7 +1,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
-#include <GL/glut.h>
+#include <GL/freeglut.h>
 
 /**
  * @author: Hendrik Werner
@@ -192,7 +192,7 @@ void handleKeyboard(unsigned char key, int x, int y) {
 void step(int value) {
 	(void) value;
 	if (!tick(&game)) {
-		exit(1);
+		glutLeaveMainLoop();
 	}
 	glutPostRedisplay();
 	glutTimerFunc(STEP_DELAY, step, 0);
