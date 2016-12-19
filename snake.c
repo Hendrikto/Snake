@@ -1,5 +1,6 @@
 #include <stdbool.h>
 #include <stdlib.h>
+#include <time.h>
 
 #include <GL/freeglut.h>
 
@@ -199,6 +200,7 @@ void step(int value) {
 }
 
 int main(int argc, char **argv) {
+	srand(time(NULL));
 	initGame(&game);
 	glutInit(&argc, argv);
 	glutCreateWindow("Snake");
