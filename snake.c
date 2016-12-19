@@ -1,6 +1,5 @@
 #include <stdbool.h>
 #include <stdlib.h>
-#include <string.h>
 
 #include <GL/glut.h>
 
@@ -17,14 +16,6 @@ typedef struct Position {
 	int col;
 } Position;
 
-typedef enum Cell {
-	EMPTY
-	,SNAKE
-	,FOOD
-} Cell;
-
-typedef Cell Board[BOARD_HEIGHT][BOARD_WIDTH];
-
 typedef enum Direction {LEFT, UP, RIGHT, DOWN} Direction;
 
 typedef struct Game {
@@ -37,13 +28,6 @@ typedef struct Game {
 } Game;
 
 Game game;
-
-/**
- * Clear a board by setting all cells to EMPTY.
- */
-void clearBoard(Board board) {
-	memset(board, EMPTY, sizeof(Board));
-}
 
 /**
  * @param d The direction.
@@ -69,40 +53,6 @@ int colDelta(const Direction d) {
 		case RIGHT: return 1;
 		default: return 0;
 	}
-}
-
-/**
- * Represent a cell using a character.
- *
- * @return A character representing the content of the cell provided.
- */
-char representCell(const Cell c) {
-	switch (c) {
-		case SNAKE: return 'S';
-		case FOOD: return 'F';
-		default: return '.';
-	}
-}
-
-/**
- * Create a string representation of some board.
- *
- * @param board The board that is to be represented.
- *
- * @return A string representation of the given board. The caller must take care
- * to free the string returned.
- */
-char *stringify(const Board board) {
-	char *str = malloc(BOARD_WIDTH * BOARD_HEIGHT + BOARD_HEIGHT + 1);
-	size_t pos = 0;
-	for (size_t row = 0; row < BOARD_HEIGHT; row++) {
-		for (size_t col = 0; col < BOARD_WIDTH; col++) {
-			str[pos++] = representCell(board[row][col]);
-		}
-		str[pos++] = '\n';
-	}
-	str[pos] = '\0';
-	return str;
 }
 
 /**
@@ -162,21 +112,6 @@ void extendTail(Game *game) {
 		);
 	}
 	game->tail[game->tailLength - 1] = game->head;
-}
-
-/**
- * Draw the board with the current game state. This clears the board before
- * writing to it.
- */
-void drawBoard(Game *game, Board board) {
-	Position *tail = game->tail;
-	size_t length = game->tailLength;
-	clearBoard(board);
-	board[game->head.row][game->head.col] = SNAKE;
-	for (size_t i = 0; i < length; i++) {
-		board[tail[i].row][tail[i].col] = SNAKE;
-	}
-	board[game->food.row][game->food.col] = FOOD;
 }
 
 /**
