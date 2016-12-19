@@ -77,7 +77,11 @@ bool tailAt(
 /**
  * @return Whether the snake is dead at the given position on the given board.
  */
-bool snakeDead(const Position *tail, size_t length, const Position position) {
+bool snakeDead(
+	const Position *tail
+	,const size_t length
+	,const Position position
+) {
 	return position.col >= BOARD_WIDTH
 		|| position.col < 0
 		|| position.row >= BOARD_HEIGHT
