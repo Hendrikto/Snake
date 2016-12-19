@@ -88,15 +88,13 @@ bool snakeDead(const Position *tail, size_t length, const Position position) {
 /**
  * Shift the tail by moving all elements down and putting the head at the top.
  */
-void shiftTail(Game *game) {
-	size_t length;
-	if ((length = game->tailLength)) {
-		Position *tail = game->tail;
+void shiftTail(Position *tail, const size_t length, const Position head) {
+	if (length) {
 		for (size_t i = 0; i < length - 1; i++) {
 			tail[i] = tail[i + 1];
 		}
-		tail[length - 1].col = game->head.col;
-		tail[length - 1].row = game->head.row;
+		tail[length - 1].col = head.col;
+		tail[length - 1].row = head.row;
 	}
 }
 
@@ -149,7 +147,7 @@ bool tick(Game *game) {
 		game->food.row = random() % BOARD_HEIGHT;
 		extendTail(game);
 	} else {
-		shiftTail(game);
+		shiftTail(game->tail, game->tailLength, game->head);
 	}
 	game->head = next;
 	return true;
