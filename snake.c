@@ -180,6 +180,7 @@ void display() {
 }
 
 void handleKeyboard(unsigned char key, int x, int y) {
+	(void) x; (void) y;
 	switch (key) {
 		case 'a': game.movement = LEFT; break;
 		case 'w': game.movement = UP; break;
@@ -189,6 +190,7 @@ void handleKeyboard(unsigned char key, int x, int y) {
 }
 
 void step(int value) {
+	(void) value;
 	if (!tick(&game)) {
 		exit(1);
 	}
