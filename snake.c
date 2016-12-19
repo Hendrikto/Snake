@@ -156,17 +156,13 @@ bool tick(Game *game) {
 }
 
 void drawCell(Position position, float r, float g, float b) {
-	float lowerX = position.col / (float) BOARD_WIDTH * 2 - 1;
-	float lowerY = position.row / (float) BOARD_HEIGHT * 2 - 1;
-	float higherX = (position.col + 1) / (float) BOARD_WIDTH * 2 - 1;
-	float higherY = (position.row + 1) / (float) BOARD_HEIGHT * 2 - 1;
-	glBegin(GL_QUADS);
-		glColor3f(r, g, b);
-		glVertex2f(lowerX, lowerY);
-		glVertex2f(higherX, lowerY);
-		glVertex2f(higherX, higherY);
-		glVertex2f(lowerX, higherY);
-	glEnd();
+	glColor3f(r, g, b);
+	glRectf(
+		position.col / (float) BOARD_WIDTH * 2 - 1
+		,position.row / (float) BOARD_HEIGHT * 2 - 1
+		,(position.col + 1) / (float) BOARD_WIDTH * 2 - 1
+		,(position.row + 1) / (float) BOARD_HEIGHT * 2 - 1
+	);
 }
 
 void display() {
