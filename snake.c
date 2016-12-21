@@ -33,16 +33,6 @@ typedef struct Game {
 } Game;
 
 Game game;
-<<<<<<< HEAD
-=======
-
-/**
- * Clear a board by setting all cells to EMPTY.
- */
-void clearBoard(Board board) {
-	memset(board, EMPTY, sizeof(Board));
-}
->>>>>>> Prepare for using GLUT.
 
 /**
  * @param d The direction.
@@ -206,6 +196,14 @@ void drawGameInfo(const size_t score) {
 	char *info = gameInfo(score);
 	glutBitmapString(GLUT_BITMAP_9_BY_15, (unsigned char*) info);
 	free(info);
+}
+
+char *gameInfo(size_t score) {
+	size_t allocated = sizeof("Score: ")
+		+ (score == 0 ? 1 : (int) log10(score) + 1) + 1;
+	char *str = malloc(allocated);
+	snprintf(str, allocated, "Score : %lu", score);
+	return str;
 }
 
 void display() {
