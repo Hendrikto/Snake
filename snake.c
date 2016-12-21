@@ -1,4 +1,6 @@
+#include <math.h>
 #include <stdbool.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 
@@ -165,6 +167,14 @@ void drawCell(Position position, float r, float g, float b) {
 		,(position.col + 1) / (float) BOARD_WIDTH * 2 - 1
 		,(position.row + 1) / (float) BOARD_HEIGHT * 2 - 1
 	);
+}
+
+char *gameInfo(size_t score) {
+	size_t allocated = sizeof("Score: ")
+		+ (score == 0 ? 1 : (int) log10(score) + 1) + 1;
+	char *str = malloc(allocated);
+	snprintf(str, allocated, "Score : %lu", score);
+	return str;
 }
 
 void display() {
