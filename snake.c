@@ -159,6 +159,12 @@ bool tick(Game *game) {
 	return true;
 }
 
+/**
+ * Draw a rectangle at the given position. The color etc. must be set before
+ * calling this.
+ *
+ * @param position The position to draw a rectangle at.
+ */
 void drawCell(Position position) {
 	glRecti(position.col, position.row, position.col + 1, position.row + 1);
 }
