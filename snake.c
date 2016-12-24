@@ -159,8 +159,7 @@ bool tick(Game *game) {
 	return true;
 }
 
-void drawCell(Position position, float r, float g, float b) {
-	glColor3f(r, g, b);
+void drawCell(Position position) {
 	glRecti(position.col, position.row, position.col + 1, position.row + 1);
 }
 
@@ -175,11 +174,14 @@ char *gameInfo(size_t score) {
 void display() {
 	glClearColor(0, 0, 0, 1);
 	glClear(GL_COLOR_BUFFER_BIT);
-	drawCell(game.head, .5, .5, .5);
+	glColor3f(.5, .5, .5);
+	drawCell(game.head);
+	glColor3f(1, 1, 1);
 	for (size_t i = 0; i < game.tailLength; i++) {
-		drawCell(game.tail[i], 1, 1, 1);
+		drawCell(game.tail[i]);
 	}
-	drawCell(game.food, 1, 0, 0);
+	glColor3f(1, 0, 0);
+	drawCell(game.food);
 	glFlush();
 }
 
