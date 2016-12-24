@@ -171,6 +171,13 @@ char *gameInfo(size_t score) {
 	return str;
 }
 
+void drawGameInfo() {
+	glRasterPos2i(1, BOARD_HEIGHT - 2);
+	char *info = gameInfo(game.tailLength);
+	glutBitmapString(GLUT_BITMAP_9_BY_15, (unsigned char*) info);
+	free(info);
+}
+
 void display() {
 	glClearColor(0, 0, 0, 1);
 	glClear(GL_COLOR_BUFFER_BIT);
@@ -182,6 +189,8 @@ void display() {
 	}
 	glColor3f(1, 0, 0);
 	drawCell(game.food);
+	glColor3f(0, 1, 0);
+	drawGameInfo();
 	glFlush();
 }
 
