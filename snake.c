@@ -171,7 +171,7 @@ void drawCell(Position position, float r, float g, float b) {
 
 char *gameInfo(size_t score) {
 	size_t allocated = sizeof("Score: ")
-		+ (score == 0 ? 1 : (int) log10(score) + 1) + 1;
+		+ (score == 0 ? 1 : (int) log10(score) + 1);
 	char *str = malloc(allocated);
 	snprintf(str, allocated, "Score: %lu", score);
 	return str;
