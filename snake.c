@@ -161,12 +161,7 @@ bool tick(Game *game) {
 
 void drawCell(Position position, float r, float g, float b) {
 	glColor3f(r, g, b);
-	glRectf(
-		position.col / (float) BOARD_WIDTH * 2 - 1
-		,position.row / (float) BOARD_HEIGHT * 2 - 1
-		,(position.col + 1) / (float) BOARD_WIDTH * 2 - 1
-		,(position.row + 1) / (float) BOARD_HEIGHT * 2 - 1
-	);
+	glRecti(position.col, position.row, position.col + 1, position.row + 1);
 }
 
 char *gameInfo(size_t score) {
@@ -216,6 +211,7 @@ int main(int argc, char **argv) {
 	glutDisplayFunc(display);
 	glutKeyboardFunc(handleKeyboard);
 	glutTimerFunc(STEP_DELAY, step, 0);
+	gluOrtho2D(0, BOARD_WIDTH, 0, BOARD_HEIGHT);
 	glutMainLoop();
 	free(game.tail);
 	return EXIT_SUCCESS;
