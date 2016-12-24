@@ -173,7 +173,7 @@ char *gameInfo(size_t score) {
 	size_t allocated = sizeof("Score: ")
 		+ (score == 0 ? 1 : (int) log10(score) + 1) + 1;
 	char *str = malloc(allocated);
-	snprintf(str, allocated, "Score : %lu", score);
+	snprintf(str, allocated, "Score: %lu", score);
 	return str;
 }
 
