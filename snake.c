@@ -210,6 +210,16 @@ void handleKeyboard(unsigned char key, int x, int y) {
 	}
 }
 
+void handleSpecial(int key, int x, int y) {
+	(void) x; (void) y;
+	switch (key) {
+		case GLUT_KEY_LEFT: game.movement = LEFT; break;
+		case GLUT_KEY_UP: game.movement = UP; break;
+		case GLUT_KEY_RIGHT: game.movement = RIGHT; break;
+		case GLUT_KEY_DOWN: game.movement = DOWN; break;
+	}
+}
+
 void step(int value) {
 	(void) value;
 	if (!tick(&game)) {
@@ -227,6 +237,7 @@ int main(int argc, char **argv) {
 	glutInitWindowSize(500, 500);
 	glutDisplayFunc(display);
 	glutKeyboardFunc(handleKeyboard);
+	glutSpecialFunc(handleSpecial);
 	glutTimerFunc(STEP_DELAY, step, 0);
 	gluOrtho2D(0, BOARD_WIDTH, 0, BOARD_HEIGHT);
 	glutMainLoop();
