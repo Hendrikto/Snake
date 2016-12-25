@@ -108,15 +108,18 @@ void shiftTail(Position *tail, const size_t length, const Position head) {
  * Extend the tail by appending the head. This function will reallocate the tail
  * if it is not big enough to hold another element.
  */
-void extendTail(Game *game) {
-	game->tailLength++;
-	if (game->tailLength > game->tailAllocated) {
-		game->tailAllocated += BOARD_WIDTH;
-		game->tail = realloc(
-			game->tail, game->tailAllocated * sizeof(Position)
-		);
+void extendTail(
+	Position *tail
+	,size_t *length
+	,size_t *allocated
+	,const Position head
+) {
+	(*length)++;
+	if ((*length) > (*allocated)) {
+		(*allocated) += BOARD_WIDTH;
+		tail = realloc(tail, (*allocated) * sizeof(Position));
 	}
-	game->tail[game->tailLength - 1] = game->head;
+	tail[(*length) - 1] = head;
 }
 
 /**
@@ -151,7 +154,12 @@ bool tick(Game *game) {
 	if (next.row == game->food.row && next.col == game->food.col) {
 		game->food.col = random() % BOARD_WIDTH;
 		game->food.row = random() % BOARD_HEIGHT;
-		extendTail(game);
+		extendTail(
+			game->tail
+			,&game->tailLength
+			,&game->tailAllocated
+			,game->head
+		);
 	} else {
 		shiftTail(game->tail, game->tailLength, game->head);
 	}
