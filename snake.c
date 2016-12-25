@@ -15,6 +15,7 @@
 #define BOARD_HEIGHT 50
 #define BOARD_WIDTH 50
 #define STEP_DELAY 150
+#define NR_SNAKES 1
 
 typedef struct Position {
 	int row;
@@ -23,13 +24,17 @@ typedef struct Position {
 
 typedef enum Direction {LEFT, UP, RIGHT, DOWN} Direction;
 
-typedef struct Game {
+typedef struct Snake {
 	Position head;
 	Position *tail;
 	size_t tailLength;
 	size_t tailAllocated;
-	Position food;
 	Direction movement;
+} Snake;
+
+typedef struct Game {
+	Snake snakes[NR_SNAKES];
+	Position food;
 } Game;
 
 Game game;
