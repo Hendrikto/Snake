@@ -177,6 +177,10 @@ void drawCell(const Position position) {
 	glRecti(position.col, position.row, position.col + 1, position.row + 1);
 }
 
+/**
+ * @return Pointer to a string containing information about the game. The caller
+ * must take care to free this after usage.
+ */
 char *gameInfo(const size_t score) {
 	size_t allocated = sizeof("Score: ")
 		+ (score == 0 ? 1 : (int) log10(score) + 1);
