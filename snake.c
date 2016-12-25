@@ -165,11 +165,11 @@ bool tick(Game *game) {
  *
  * @param position The position to draw a rectangle at.
  */
-void drawCell(Position position) {
+void drawCell(const Position position) {
 	glRecti(position.col, position.row, position.col + 1, position.row + 1);
 }
 
-char *gameInfo(size_t score) {
+char *gameInfo(const size_t score) {
 	size_t allocated = sizeof("Score: ")
 		+ (score == 0 ? 1 : (int) log10(score) + 1);
 	char *str = malloc(allocated);
