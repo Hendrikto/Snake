@@ -66,18 +66,26 @@ int colDelta(const Direction d) {
 }
 
 /**
- * Check whether there is a tail at some position.
- *
- * @return Whether there is a tail at the specified position.
+ * @return Whether there is a snake at the specified position.
  */
-bool tailAt(
-	const Position *tail
-	,const size_t length
+bool snakeAt(
+	const Snake snakes[]
 	,const Position position
 ) {
-	for (size_t i = 0; i < length; i++) {
-		if (tail[i].row == position.row && tail[i].col == position.col) {
+	for (size_t k = 0; k < NR_SNAKES; k++) {
+		if (
+			snakes[k].head.col == position.col
+			&& snakes[k].head.row == position.row
+		) {
 			return true;
+		}
+		for (size_t i = 0; i < snakes[k].tailLength; i++) {
+			if (
+				snakes[k].tail[i].row == position.row
+				&& snakes[k].tail[i].col == position.col
+			) {
+				return true;
+			}
 		}
 	}
 	return false;
@@ -87,15 +95,14 @@ bool tailAt(
  * @return Whether the snake is dead at the given position on the given board.
  */
 bool snakeDead(
-	const Position *tail
-	,const size_t length
+	const Snake *snakes
 	,const Position position
 ) {
 	return position.col >= BOARD_WIDTH
 		|| position.col < 0
 		|| position.row >= BOARD_HEIGHT
 		|| position.row < 0
-		|| tailAt(tail, length, position);
+		|| snakeAt(snakes, position);
 }
 
 /**
@@ -155,7 +162,7 @@ bool tick(Game *game) {
 		game->head.row + rowDelta(game->movement)
 		,game->head.col + colDelta(game->movement)
 	};
-	if (snakeDead(game->tail, game->tailLength, next)) {
+	if (snakeDead(game->snakes, next)) {
 		return false;
 	}
 	if (next.row == game->food.row && next.col == game->food.col) {
