@@ -66,6 +66,13 @@ int colDelta(const Direction d) {
 }
 
 /**
+ * @return Whether both positions are equal.
+ */
+bool positionsEqual(Position p1, Position p2) {
+	return p1.col == p2.col && p1.row == p2.row;
+}
+
+/**
  * @return Whether there is a snake at the specified position.
  */
 bool snakeAt(
@@ -73,17 +80,11 @@ bool snakeAt(
 	,const Position position
 ) {
 	for (size_t k = 0; k < NR_SNAKES; k++) {
-		if (
-			snakes[k].head.col == position.col
-			&& snakes[k].head.row == position.row
-		) {
+		if (positionsEqual(position, snakes[k].head)) {
 			return true;
 		}
 		for (size_t i = 0; i < snakes[k].tailLength; i++) {
-			if (
-				snakes[k].tail[i].row == position.row
-				&& snakes[k].tail[i].col == position.col
-			) {
+			if (positionsEqual(position, snakes[k].tail[i])) {
 				return true;
 			}
 		}
@@ -165,7 +166,7 @@ bool tick(Game *game) {
 	if (snakeDead(game->snakes, next)) {
 		return false;
 	}
-	if (next.row == game->food.row && next.col == game->food.col) {
+	if (positionsEqual(next, game->food)) {
 		game->food.col = random() % BOARD_WIDTH;
 		game->food.row = random() % BOARD_HEIGHT;
 		extendTail(
