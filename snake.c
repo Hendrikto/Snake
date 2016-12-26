@@ -284,6 +284,7 @@ int main(int argc, char **argv) {
 	glutSpecialFunc(handleSpecial);
 	glutTimerFunc(STEP_DELAY, step, 0);
 	gluOrtho2D(0, BOARD_WIDTH, 0, BOARD_HEIGHT);
+	glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_CONTINUE_EXECUTION);
 	glutMainLoop();
 	free(game.tail);
 	return EXIT_SUCCESS;
