@@ -231,11 +231,13 @@ char *gameInfo(size_t score) {
 void display() {
 	glClearColor(0, 0, 0, 1);
 	glClear(GL_COLOR_BUFFER_BIT);
-	glColor3f(.5, .5, .5);
-	drawCell(game.head);
-	glColor3f(1, 1, 1);
-	for (size_t i = 0; i < game.tailLength; i++) {
-		drawCell(game.tail[i]);
+	for (size_t k = 0; k < NR_SNAKES; k++) {
+		glColor3f(.5, .5, .5);
+		drawCell(game.snakes[k].head);
+		glColor3f(1, 1, 1);
+		for (size_t i = 0; i < game.snakes[k].tailLength; i++) {
+			drawCell(game.snakes[k].tail[i]);
+		}
 	}
 	glColor3f(1, 0, 0);
 	drawCell(game.food);
