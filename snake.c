@@ -138,17 +138,26 @@ void extendTail(
 }
 
 /**
+ * Initialize a snake.
+ */
+void initSnake(Snake *snake) {
+	snake->head.col = 0;
+	snake->head.row = 0;
+	snake->tail = calloc(BOARD_WIDTH, sizeof(Position));
+	snake->tailAllocated = BOARD_WIDTH;
+	snake->tailLength = 0;
+	snake->movement = RIGHT;
+}
+
+/**
  * Initialize a game.
  */
 void initGame(Game *game) {
-	game->head.col = 0;
-	game->head.row = 0;
-	game->tail = calloc(BOARD_WIDTH, sizeof(Position));
-	game->tailLength = 0;
-	game->tailAllocated = BOARD_WIDTH;
+	for (size_t i = 0; i < NR_SNAKES; i++) {
+		initSnake(&game->snakes[i]);
+	}
 	game->food.col = random() % BOARD_WIDTH;
 	game->food.row = random() % BOARD_HEIGHT;
-	game->movement = RIGHT;
 }
 
 /**
