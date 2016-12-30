@@ -123,18 +123,16 @@ void shiftTail(Position *tail, const size_t length, const Position head) {
  * Extend the tail by appending the head. This function will reallocate the tail
  * if it is not big enough to hold another element.
  */
-void extendTail(
-	Position *tail
-	,size_t *length
-	,size_t *allocated
-	,const Position head
-) {
-	(*length)++;
-	if ((*length) > (*allocated)) {
-		(*allocated) += BOARD_WIDTH;
-		tail = realloc(tail, (*allocated) * sizeof(Position));
+void extendTail(Snake *snake) {
+	snake->tailLength++;
+	if (snake->tailLength > snake->tailAllocated) {
+		snake->tailAllocated += BOARD_WIDTH;
+		snake->tail = realloc(
+			snake->tail
+			,snake->tailAllocated * sizeof(Position)
+		);
 	}
-	tail[(*length) - 1] = head;
+	snake->tail[snake->tailLength - 1] = snake->head;
 }
 
 /**
