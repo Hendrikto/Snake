@@ -109,13 +109,13 @@ bool snakeDead(
 /**
  * Shift the tail by moving all elements down and putting the head at the top.
  */
-void shiftTail(Position *tail, const size_t length, const Position head) {
-	if (length) {
-		for (size_t i = 0; i < length - 1; i++) {
-			tail[i] = tail[i + 1];
+void shiftTail(Snake *snake) {
+	if (snake->tailLength) {
+		for (size_t i = 0; i < snake->tailLength - 1; i++) {
+			snake->tail[i] = snake->tail[i + 1];
 		}
-		tail[length - 1].col = head.col;
-		tail[length - 1].row = head.row;
+		snake->tail[snake->tailLength - 1].col = snake->head.col;
+		snake->tail[snake->tailLength - 1].row = snake->head.row;
 	}
 }
 
