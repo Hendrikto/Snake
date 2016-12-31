@@ -161,6 +161,15 @@ void initGame(Game *game) {
 }
 
 /**
+ * Free the memory allocated for all snakes.
+ */
+void freeSnakes(Snake *snakes) {
+	for (size_t i = 0; i < NR_SNAKES; i++) {
+		free(snakes[i].tail);
+	}
+}
+
+/**
  * Get the status of a snake after taking the next step and set next to the
  * position its head will occupy after taking that step.
  */
@@ -311,6 +320,6 @@ int main(int argc, char **argv) {
 	gluOrtho2D(0, BOARD_WIDTH, 0, BOARD_HEIGHT);
 	glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_CONTINUE_EXECUTION);
 	glutMainLoop();
-	free(game.tail);
+	freeSnakes(game.snakes);
 	return EXIT_SUCCESS;
 }
