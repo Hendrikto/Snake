@@ -24,6 +24,8 @@ typedef struct Position {
 
 typedef enum Direction {LEFT, UP, RIGHT, DOWN} Direction;
 
+typedef enum SnakeStatus {ALIVE, DEAD, HAS_EATEN} SnakeStatus;
+
 typedef struct Snake {
 	Position head;
 	Position *tail;
