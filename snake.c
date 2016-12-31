@@ -161,6 +161,29 @@ void initGame(Game *game) {
 }
 
 /**
+ * Get the status of a snake after taking the next step and set next to the
+ * position its head will occupy after taking that step.
+ */
+SnakeStatus stepSnake(
+	Snake *snakes
+	,const size_t snakeIndex
+	,const Position food
+	,Position *next
+) {
+	next->col = snakes[snakeIndex].head.col
+		+ colDelta(snakes[snakeIndex].movement);
+	next->row = snakes[snakeIndex].head.row
+		+ rowDelta(snakes[snakeIndex].movement);
+	if (snakeDead(snakes, *next)) {
+		return DEAD;
+	}
+	if (positionsEqual(*next, food)) {
+		return HAS_EATEN;
+	}
+	return ALIVE;
+}
+
+/**
  * Advance the game state one tick.
  *
  * @param game The game.
