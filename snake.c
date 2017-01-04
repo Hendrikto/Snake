@@ -197,29 +197,24 @@ SnakeStatus stepSnake(
  *
  * @param game The game.
  *
- * @return Whether the snake is still alive.
+ * @return Whether the snakes are still alive.
  */
 bool tick(Game *game) {
-	Position next = {
-		game->head.row + rowDelta(game->movement)
-		,game->head.col + colDelta(game->movement)
-	};
-	if (snakeDead(game->snakes, next)) {
-		return false;
+	for (size_t i = 0; i < NR_SNAKES; i++) {
+		Position next;
+		switch (stepSnake(game->snakes, i, game->food, &next)) {
+			case DEAD: return false;
+			case HAS_EATEN:
+				game->food.col = random() % BOARD_WIDTH;
+				game->food.row = random() % BOARD_HEIGHT;
+				extendTail(&game->snakes[i]);
+				break;
+			case ALIVE:
+				shiftTail(&game->snakes[i]);
+				break;
+		}
+		game->snakes[i].head = next;
 	}
-	if (positionsEqual(next, game->food)) {
-		game->food.col = random() % BOARD_WIDTH;
-		game->food.row = random() % BOARD_HEIGHT;
-		extendTail(
-			game->tail
-			,&game->tailLength
-			,&game->tailAllocated
-			,game->head
-		);
-	} else {
-		shiftTail(game->tail, game->tailLength, game->head);
-	}
-	game->head = next;
 	return true;
 }
 
