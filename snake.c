@@ -70,7 +70,7 @@ int colDelta(const Direction d) {
 /**
  * @return Whether both positions are equal.
  */
-bool positionsEqual(Position p1, Position p2) {
+bool positionsEqual(const Position p1, const Position p2) {
 	return p1.col == p2.col && p1.row == p2.row;
 }
 
