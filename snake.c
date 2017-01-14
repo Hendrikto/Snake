@@ -319,20 +319,20 @@ void display() {
 void handleKeyboard(unsigned char key, int x, int y) {
 	(void) x; (void) y;
 	switch (key) {
-		case 'a': game.movement = LEFT; break;
-		case 'w': game.movement = UP; break;
-		case 'd': game.movement = RIGHT; break;
-		case 's': game.movement = DOWN; break;
+		case 'a': game.snakes[0].movement = LEFT; break;
+		case 'w': game.snakes[0].movement = UP; break;
+		case 'd': game.snakes[0].movement = RIGHT; break;
+		case 's': game.snakes[0].movement = DOWN; break;
 	}
 }
 
 void handleSpecial(int key, int x, int y) {
 	(void) x; (void) y;
 	switch (key) {
-		case GLUT_KEY_LEFT: game.movement = LEFT; break;
-		case GLUT_KEY_UP: game.movement = UP; break;
-		case GLUT_KEY_RIGHT: game.movement = RIGHT; break;
-		case GLUT_KEY_DOWN: game.movement = DOWN; break;
+		case GLUT_KEY_LEFT: game.snakes[1].movement = LEFT; break;
+		case GLUT_KEY_UP: game.snakes[1].movement = UP; break;
+		case GLUT_KEY_RIGHT: game.snakes[1].movement = RIGHT; break;
+		case GLUT_KEY_DOWN: game.snakes[1].movement = DOWN; break;
 	}
 }
 
