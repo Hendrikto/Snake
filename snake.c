@@ -26,12 +26,15 @@ typedef enum Direction {LEFT, UP, RIGHT, DOWN} Direction;
 
 typedef enum SnakeStatus {ALIVE, DEAD, HAS_EATEN} SnakeStatus;
 
+typedef GLfloat Color[3];
+
 typedef struct Snake {
 	Position head;
 	Position *tail;
 	size_t tailLength;
 	size_t tailAllocated;
 	Direction movement;
+	Color color;
 } Snake;
 
 typedef struct Game {
@@ -147,21 +150,33 @@ void initSnakePositional(Snake *snake, const size_t index) {
 			snake->head.col = BOARD_WIDTH - 1;
 			snake->head.row = BOARD_HEIGHT - 1;
 			snake->movement = LEFT;
+			snake->color[0] = .5;
+			snake->color[1] = 0;
+			snake->color[2] = .5;
 			break;
 		case 2:
 			snake->head.col = 0;
 			snake->head.row = BOARD_HEIGHT - 1;
 			snake->movement = DOWN;
+			snake->color[0] = 0;
+			snake->color[1] = 1;
+			snake->color[2] = 0;
 			break;
 		case 3:
 			snake->head.col = BOARD_WIDTH - 1;
 			snake->head.row = 0;
 			snake->movement = UP;
+			snake->color[0] = 0;
+			snake->color[1] = 0;
+			snake->color[2] = 1;
 			break;
 		default:
 			snake->head.col = 0;
 			snake->head.row = 0;
 			snake->movement = RIGHT;
+			snake->color[0] = .5;
+			snake->color[1] = .5;
+			snake->color[2] = .5;
 	}
 }
 
@@ -287,7 +302,7 @@ void display() {
 	glClearColor(0, 0, 0, 1);
 	glClear(GL_COLOR_BUFFER_BIT);
 	for (size_t k = 0; k < NR_SNAKES; k++) {
-		glColor3f(.5, .5, .5);
+		glColor3fv(game.snakes[k].color);
 		drawCell(game.snakes[k].head);
 		glColor3f(1, 1, 1);
 		for (size_t i = 0; i < game.snakes[k].tailLength; i++) {
