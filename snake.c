@@ -6,8 +6,6 @@
 
 #include <GL/freeglut.h>
 
-#include <GL/glut.h>
-
 /**
  * @author: Hendrik Werner
  */
