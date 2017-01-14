@@ -138,6 +138,31 @@ void extendTail(Snake *snake) {
 }
 
 /**
+ * Place a snake according to its index. This function assumes that the snake is
+ * already initialized and only provides unique positions for a maximum of 4
+ * snakes.
+ */
+void placeSnake(Snake *snake, size_t index) {
+	switch (index) {
+		case 1:
+			snake->head.col = BOARD_WIDTH - 1;
+			snake->head.row = BOARD_HEIGHT - 1;
+			snake->movement = LEFT;
+			break;
+		case 2:
+			snake->head.col = 0;
+			snake->head.row = BOARD_HEIGHT - 1;
+			snake->movement = DOWN;
+			break;
+		case 3:
+			snake->head.col = BOARD_WIDTH - 1;
+			snake->head.row = 0;
+			snake->movement = UP;
+			break;
+	}
+}
+
+/**
  * Initialize a snake.
  */
 void initSnake(Snake *snake) {
@@ -155,6 +180,7 @@ void initSnake(Snake *snake) {
 void initGame(Game *game) {
 	for (size_t i = 0; i < NR_SNAKES; i++) {
 		initSnake(&game->snakes[i]);
+		placeSnake(&game->snakes[i], i);
 	}
 	game->food.col = random() % BOARD_WIDTH;
 	game->food.row = random() % BOARD_HEIGHT;
