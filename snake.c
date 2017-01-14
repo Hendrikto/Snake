@@ -271,11 +271,7 @@ void drawCell(const Position position) {
 	glRecti(position.col, position.row, position.col + 1, position.row + 1);
 }
 
-/**
- * @return Pointer to a string containing information about the game. The caller
- * must take care to free this after usage.
- */
-char *gameInfo(const size_t score) {
+char *snakeInfo(const size_t score) {
 	size_t allocated = sizeof("Score: ")
 		+ (score == 0 ? 1 : (int) log10(score) + 1);
 	char *str = malloc(allocated);
@@ -283,19 +279,34 @@ char *gameInfo(const size_t score) {
 	return str;
 }
 
-void drawGameInfo(const size_t score) {
-	glRasterPos2i(1, BOARD_HEIGHT - 2);
-	char *info = gameInfo(score);
-	glutBitmapString(GLUT_BITMAP_9_BY_15, (unsigned char*) info);
-	free(info);
-}
-
-char *gameInfo(size_t score) {
-	size_t allocated = sizeof("Score: ")
-		+ (score == 0 ? 1 : (int) log10(score) + 1) + 1;
-	char *str = malloc(allocated);
-	snprintf(str, allocated, "Score : %lu", score);
-	return str;
+void drawGameInfo(const Snake *snakes) {
+	char *info;
+	switch (NR_SNAKES) {
+		case 4:
+			glColor3fv(snakes[3].color);
+			glRasterPos2i(BOARD_WIDTH - 5, 1);
+			info = snakeInfo(snakes[3].tailLength);
+			glutBitmapString(GLUT_BITMAP_9_BY_15, (unsigned char*) info);
+			free(info);
+		case 3:
+			glColor3fv(snakes[2].color);
+			glRasterPos2i(1, BOARD_HEIGHT - 2);
+			info = snakeInfo(snakes[2].tailLength);
+			glutBitmapString(GLUT_BITMAP_9_BY_15, (unsigned char*) info);
+			free(info);
+		case 2:
+			glColor3fv(snakes[1].color);
+			glRasterPos2i(BOARD_WIDTH - 5, BOARD_HEIGHT - 2);
+			info = snakeInfo(snakes[1].tailLength);
+			glutBitmapString(GLUT_BITMAP_9_BY_15, (unsigned char*) info);
+			free(info);
+		default:
+			glColor3fv(snakes[0].color);
+			glRasterPos2i(1, 1);
+			info = snakeInfo(snakes[0].tailLength);
+			glutBitmapString(GLUT_BITMAP_9_BY_15, (unsigned char*) info);
+			free(info);
+	}
 }
 
 void display() {
@@ -311,8 +322,7 @@ void display() {
 	}
 	glColor3f(1, 0, 0);
 	drawCell(game.food);
-	glColor3f(0, 1, 0);
-	drawGameInfo(game.tailLength);
+	drawGameInfo(game.snakes);
 	glFlush();
 }
 
