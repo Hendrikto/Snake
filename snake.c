@@ -138,11 +138,10 @@ void extendTail(Snake *snake) {
 }
 
 /**
- * Place a snake according to its index. This function assumes that the snake is
- * already initialized and only provides unique positions for a maximum of 4
- * snakes.
+ * Initialize a snake according to its index. This function only provides 4
+ * distinct states.
  */
-void placeSnake(Snake *snake, size_t index) {
+void initSnakePositional(Snake *snake, const size_t index) {
 	switch (index) {
 		case 1:
 			snake->head.col = BOARD_WIDTH - 1;
@@ -159,29 +158,32 @@ void placeSnake(Snake *snake, size_t index) {
 			snake->head.row = 0;
 			snake->movement = UP;
 			break;
+		default:
+			snake->head.col = 0;
+			snake->head.row = 0;
+			snake->movement = RIGHT;
 	}
 }
 
 /**
- * Initialize a snake.
+ * Initialize the snakes.
  */
-void initSnake(Snake *snake) {
-	snake->head.col = 0;
-	snake->head.row = 0;
-	snake->tail = calloc(BOARD_WIDTH, sizeof(Position));
-	snake->tailAllocated = BOARD_WIDTH;
-	snake->tailLength = 0;
-	snake->movement = RIGHT;
+void initSnakes(Snake *snakes) {
+	Snake *snake;
+	for (size_t i = 0; i < NR_SNAKES; i++) {
+		snake = (snakes + i);
+		snake->tail = calloc(BOARD_WIDTH, sizeof(Position));
+		snake->tailAllocated = BOARD_WIDTH;
+		snake->tailLength = 0;
+		initSnakePositional(snake, i);
+	}
 }
 
 /**
  * Initialize a game.
  */
 void initGame(Game *game) {
-	for (size_t i = 0; i < NR_SNAKES; i++) {
-		initSnake(&game->snakes[i]);
-		placeSnake(&game->snakes[i], i);
-	}
+	initSnakes(game->snakes);
 	game->food.col = random() % BOARD_WIDTH;
 	game->food.row = random() % BOARD_HEIGHT;
 }
